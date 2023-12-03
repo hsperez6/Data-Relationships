@@ -28,6 +28,15 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
     });
+
+    Movie.hasMany(models.Person, {
+      as: 'actor',
+      foreignKey: {
+        fieldName: 'actorPersonId',
+        allowNull: false,
+      }
+    });
+
   };
 
   return Movie;

@@ -27,6 +27,11 @@ module.exports = (sequelize) => {
         fieldName: 'directorPersonId',
         allowNull: false,
       },
+      as: 'actor',
+      foreignKey: {
+        fieldName: 'actorPersonId',
+        allowNull: false,
+      },
     });
   };
 
