@@ -66,11 +66,13 @@ console.log('Testing the connection to the database...');
         title: 'The Iron Giant',
         releaseYear: 1999,
         directorPersonId: bradBird.id,
+        actorPersonId: vinDiesel.id,
       }),
       Movie.create({
         title: 'The Incredibles',
         releaseYear: 2004,
         directorPersonId: bradBird.id,
+        actorPersonId: craigTNelson.id,
       }),
     ]);
     console.log(JSON.stringify(movieInstances, null, 2));
@@ -82,6 +84,10 @@ console.log('Testing the connection to the database...');
           model: Person, 
           as: 'director',
         },
+        {
+          model: Person, 
+          as: 'actor',
+        },
       ],
     });
     console.log(movies.map(movie => movie.get({ plain: true })));
@@ -92,6 +98,10 @@ console.log('Testing the connection to the database...');
         {
           model: Movie,
           as: 'director',
+        },
+        {
+          model: Movie, 
+          as: 'actor',
         },
       ],
     });

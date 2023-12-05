@@ -21,6 +21,7 @@ module.exports = (sequelize) => {
 
   Movie.associate = (models) => {
     // TODO Add associations.
+
     Movie.belongsTo(models.Person, {
       as: 'director',
       foreignKey: {
@@ -29,12 +30,13 @@ module.exports = (sequelize) => {
       },
     });
 
-    Movie.hasMany(models.Person, {
+    Movie.belongsToMany(models.Person, {
+      through: 'ActorMovies',
       as: 'actor',
-      foreignKey: {
-        fieldName: 'actorPersonId',
-        allowNull: false,
-      }
+      // foreignKey: {
+      //   fieldName: 'actorPersonId',
+      //   allowNull: false,
+      // },
     });
 
   };
