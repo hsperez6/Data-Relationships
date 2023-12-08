@@ -26,17 +26,17 @@ module.exports = (sequelize) => {
       as: 'director',
       foreignKey: {
         fieldName: 'directorPersonId',
+        field: 'directorPersonId',
         allowNull: false,
       },
+      onDelete: 'cascade',
     });
 
     Movie.belongsToMany(models.Person, {
-      through: 'ActorMovies',
-      as: 'actor',
-      // foreignKey: {
-      //   fieldName: 'actorPersonId',
-      //   allowNull: false,
-      // },
+      as: 'actors',
+      through: 'MovieActors',
+      foreignKey: 'movieId',
+      otherKey: 'personId'
     });
 
   };

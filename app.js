@@ -66,19 +66,40 @@ console.log('Testing the connection to the database...');
         title: 'The Iron Giant',
         releaseYear: 1999,
         directorPersonId: bradBird.id,
-        actorPersonId: vinDiesel.id,
       }),
       Movie.create({
         title: 'The Incredibles',
         releaseYear: 2004,
         directorPersonId: bradBird.id,
-        actorPersonId: craigTNelson.id,
       }),
     ]);
     console.log(JSON.stringify(movieInstances, null, 2));
 
+    /*******Adding actors to movies*********************************/
+
+    [theIronGiant, theIncredibles] = movieInstances;
+
+    const p1c = theIronGiant.addActors([
+      vinDiesel,
+      eliMarienthal
+    ]);
+
+    const p2 = theIncredibles.setActors([
+      craigTNelson,
+      hollyHunter,
+    ]);
+
+    const actors = await Promise.all([
+      p1c,
+      p2,
+    ]);
+    console.log(JSON.stringify(actors, null, 2));
+
+    /***************************************************/
+
     // Retrieve movies
     const movies = await Movie.findAll({
+
       include: [
         {
           model: Person, 
@@ -86,9 +107,15 @@ console.log('Testing the connection to the database...');
         },
         {
           model: Person, 
-          as: 'actor',
+          as: 'actors',
+          // // attributes: ['firstName', 'lastName'],
+          // through: {
+          //   // this removes the through model properties from being included
+          //   attributes: [],
+          // },
         },
       ],
+
     });
     console.log(movies.map(movie => movie.get({ plain: true })));
 
@@ -98,10 +125,15 @@ console.log('Testing the connection to the database...');
         {
           model: Movie,
           as: 'director',
+          attributes: ['id', 'title', 'releaseYear'],
         },
         {
           model: Movie, 
           as: 'actor',
+          attributes: ['id', 'title', 'releaseYear'],
+          through: {
+            attributes: [],
+          }
         },
       ],
     });

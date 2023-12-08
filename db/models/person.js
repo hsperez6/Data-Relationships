@@ -26,17 +26,16 @@ module.exports = (sequelize) => {
       as: 'director',
       foreignKey: {
         fieldName: 'directorPersonId',
+        field: 'directorPersonId',
         allowNull: false,
       },
     });
 
     Person.belongsToMany(models.Movie, {
-      through: 'ActorMovies',
       as: 'actor',
-      // foreignKey: {
-      //   fieldName: 'actorPersonId',
-      //   allowNull: false,
-      // },
+      through: 'MovieActors',
+      foreignKey: 'personId',
+      otherKey:'movieId'
     });
 
   };
